@@ -36,7 +36,8 @@ handleSave = async bookInfo => {
     let apiUrl = `${SERVER}/books`;
     let results = await axios.post(apiUrl, bookInfo);
     let newBook = results.data;
-    console.log(newBook);
+    console.log('this is in BB  new book ',newBook);
+    this.fetchBooks();
   }
 
    render() {
@@ -51,7 +52,12 @@ handleSave = async bookInfo => {
                 <>
                   <h2>Books!</h2>
                   {this.state.books.map(book => (
-                    <p key={book._id}>{book.title}</p>
+                    <div key={book._id}>
+                      <p>{book.title}</p>
+                      <p>{book.discription}</p>
+                      <p>{book.email}</p>
+                    </div>
+
                   ))}
                 </>
                 }

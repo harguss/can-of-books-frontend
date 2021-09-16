@@ -8,18 +8,13 @@ export default class CreateBooks extends React.Component {
     let formData = {
       title: elements.title.value,
       discription: elements.discription.value,
+
     }
     console.log('saving', formData);
-    
-
     this.props.onSave(formData);
-    // reset the form
-    // event.target.reset();
-    // elements.name.focus();
-  }
+    }
 
-
-  render() {
+render() {
     return (
       <form method="post" onSubmit={this.handleSubmit}>
         <input placeholder="title" name="title" />
