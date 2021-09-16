@@ -5,9 +5,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
 } from "react-router-dom";
-import BestBooks from './BestBooks';
+import BestBooks from './BestBooks'; 
+import Login from './Login';
+
+
 
 
 
@@ -18,7 +21,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
+      user: { username: 'shargus', email: 'shargus@mac' },
     }
   }
 
@@ -37,8 +40,6 @@ class App extends React.Component {
   
 
  
-  
-
 render() {
     return (
       <>
@@ -49,7 +50,10 @@ render() {
               <h1>Home</h1>
 
               {/* TODO: if the user is logged in, render the `BestBooks` component, if they are not, render the `Login` component */}
-              <BestBooks />
+              {this.state.user 
+              ? <BestBooks books={this.state.books} />
+              : <Login onLogin={this.loginHandler} />
+              }
             </Route>
             {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
           </Switch>

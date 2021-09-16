@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 
+import CreateBooks from './CreateBooks';
+const SERVER = process.env.REACT_APP_SERVER;
+
 
 class BestBooks extends React.Component {
   constructor(props) {
@@ -16,8 +19,9 @@ class BestBooks extends React.Component {
   }
 
   async fetchBooks() {
-    let apiUrl = `${process.env.REACT_APP_SERVER}/books`;
     
+    let apiUrl = `${SERVER}/books`;
+
     try {
       let results = await axios.get(apiUrl);
       this.setState({ books: results.data });
@@ -27,23 +31,35 @@ class BestBooks extends React.Component {
       console.log(err);
     }
   }
+  
+handleSave = async bookInfo => {
+    let apiUrl = `${SERVER}/books`;
+    let results = await axios.post(apiUrl, bookInfo);
+    let newBook = results.data;
+    console.log(newBook);
+  }
 
-  render() {
+   render() {
 
-    /* TODO: render user's books in a Carousel */
+  //   /* TODO: render user's books in a Carousel */
 
     return (
       <>
-        <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
-
-        {this.state.books.length ? (
-          <p>Book Carousel coming soon</p>
-        ) : (
-          <h3>No Books Found :(</h3>
-        )}
-      </>
+      
+        <CreateBooks onSave={this.handleSave} />
+          {this.state.books.length > 0 &&
+                <>
+                  <h2>Books!</h2>
+                  {this.state.books.map(book => (
+                    <p key={book._id}>{book.title}</p>
+                  ))}
+                </>
+                }
+           </>
     )
   }
-}
+ }
+
+        
 
 export default BestBooks;
